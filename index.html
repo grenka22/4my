@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Расписание">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>Умное школьное расписание</title>
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Tesseract.js для OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="app-header">
+        <h1 id="page-title">Расписание</h1>
+        <button id="btn-upload" class="icon-btn" title="Загрузить фото">📷</button>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="app-container">
+        
+        <!-- VIEW: HOME (Главный экран) -->
+        <section id="view-home" class="view active">
+            <!-- Smart Card -->
+            <div class="smart-card">
+                <div class="smart-card-header">Сейчас</div>
+                <div id="smart-card-content" class="smart-card-content">Загрузка...</div>
+            </div>
+
+            <!-- Week Toggle -->
+            <div class="week-toggle">
+                <button class="toggle-btn active" data-week="odd">Нечетная</button>
+                <button class="toggle-btn" data-week="even">Четная</button>
+            </div>
+
+            <!-- Day Tabs -->
+            <div id="day-tabs" class="day-tabs"></div>
+            
+            <!-- Lessons List -->
+            <div id="lessons-list" class="lessons-list"></div>
+            
+            <!-- Action Buttons -->
+            <button id="btn-edit-manual" class="btn-primary">✏️ Редактировать вручную</button>
+        </section>
+
+        <!-- VIEW: UPLOAD (Загрузка фото) -->
+        <section id="view-upload" class="view">
+            <div class="upload-area">
+                <div class="upload-icon">📸</div>
+                <h2 style="margin: 16px 0 8px; font-size: 18px;">Загрузите фото расписания</h2>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                    Сделайте фото или выберите из галереи
+                </p>
+                
+                <input type="file" id="file-input" accept="image/*" capture="environment">
+                <label for="file-input" class="upload-label">
+                    <span style="font-size: 24px; margin-right: 8px;">📷</span>
+                    Выбрать фото
+                </label>
+            </div>
+
+            <!-- OCR Progress -->
+            <div id="ocr-progress" class="ocr-progress hidden">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p id="progress-text" style="margin-top: 8px; font-size: 14px; color: var(--text-secondary);">
+                    Распознавание: 0%
+                </p>
+            </div>
+
+            <button id="btn-cancel-upload" class="btn-text">Отмена</button>
+        </section>
+
+        <!-- VIEW: EDITOR (Редактор) -->
+        <section id="view-editor" class="view">
+            <!-- Editor Header -->
+            <div class="editor-header">
+                <div class="day-selector">
+                    <button class="day-btn active" data-day="1">Пн</button>
+                    <button class="day-btn" data-day="2">Вт</button>
+                    <button class="day-btn" data-day="3">Ср</button>
+                    <button class="day-btn" data-day="4">Чт</button>
+                    <button class="day-btn" data-day="5">Пт</button>
+                    <button class="day-btn" data-day="6">Сб</button>
+                </div>
+                <button id="btn-add-lesson" class="add-lesson-btn">
+                    <span class="icon">＋</span>
+                    <span>Урок</span>
+                </button>
+            </div>
+
+            <!-- Editor List -->
+            <div id="editor-list"></div>
+
+            <!-- Editor Actions -->
+            <div class="editor-actions">
+                <button id="btn-save-editor" class="btn-primary" style="flex: 1;">💾 Сохранить</button>
+                <button id="btn-cancel-editor" class="btn-text" style="margin: 0; flex: 0.5;">Отмена</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Files -->
+    <script src="data.js"></script>
+    <script src="parser.js"></script>
+    <script src="ocr.js"></script>
+    <script src="editor.js"></script>
+    <script src="render.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

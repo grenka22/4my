@@ -1,0 +1,757 @@
+:root {
+    --primary: #007AFF;
+    --accent: #5856D6;
+    --success: #34C759;
+    --error: #FF3B30;
+    --warning: #FF9500;
+    --bg: #F2F2F7;
+    --card-bg: #FFFFFF;
+    --text: #000000;
+    --text-secondary: #8E8E93;
+    --border: #C6C6C8;
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --card-bg: #1C1C1E;
+        --text: #FFFFFF;
+        --text-secondary: #98989D;
+        --border: #38383A;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding-top: calc(60px + var(--safe-area-top));
+    padding-bottom: var(--safe-area-bottom);
+    line-height: 1.47059;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HEADER ===== */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(60px + var(--safe-area-top));
+    padding-top: var(--safe-area-top);
+    background: var(--card-bg);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.app-header h1 {
+    font-size: 17px;
+    margin: 0;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.4px;
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.icon-btn:active {
+    transform: scale(0.9);
+    box-shadow: 0 1px 4px rgba(0, 122, 255, 0.2);
+}
+
+/* ===== VIEWS ===== */
+.view {
+    display: none;
+    padding: 16px;
+    animation: fadeIn 0.3s ease;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== SMART CARD ===== */
+.smart-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.smart-card-header {
+    font-size: 13px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.smart-card-content {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Card Lesson Row */
+.card-lesson-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card-lesson-row:last-child {
+    border-bottom: none;
+}
+
+.card-lesson-main {
+    font-size: 15px;
+    font-weight: 500;
+    flex-shrink: 1;
+    min-width: 0;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.card-lesson-hw {
+    font-size: 13px;
+    opacity: 0.9;
+    flex-shrink: 0;
+    max-width: 45%;
+    text-align: right;
+    word-break: break-word;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+/* ===== WEEK TOGGLE ===== */
+.week-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: var(--card-bg);
+    padding: 4px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn:active {
+    transform: scale(0.97);
+}
+
+/* ===== DAY TABS ===== */
+.day-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.day-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.day-tab {
+    padding: 8px 16px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.day-tab.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.day-tab.today {
+    border-color: var(--primary);
+}
+
+.day-tab:active {
+    transform: scale(0.95);
+}
+
+/* ===== LESSONS LIST ===== */
+.lesson-item {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.lesson-item.current {
+    border-left-color: var(--primary);
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.05), rgba(88, 86, 214, 0.05));
+}
+
+.lesson-item.next {
+    border-left-color: var(--success);
+}
+
+.lesson-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.lesson-time {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.lesson-info {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.lesson-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text);
+}
+
+.lesson-extra {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* Homework Styles */
+.lesson-homework {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(0, 122, 255, 0.08);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary);
+}
+
+.homework-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.homework-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.homework-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+    word-break: break-word;
+    flex: 1;
+}
+
+.homework-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.btn-edit-homework,
+.btn-delete-homework {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-edit-homework:active {
+    background: rgba(0, 122, 255, 0.1);
+    transform: scale(0.9);
+}
+
+.btn-delete-homework:active {
+    background: rgba(255, 59, 48, 0.1);
+    transform: scale(0.9);
+}
+
+.lesson-homework-edit {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(0, 122, 255, 0.08);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary);
+}
+
+.homework-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.homework-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.homework-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-save-homework {
+    flex: 1;
+    padding: 10px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-save-homework:active {
+    transform: scale(0.95);
+    background: #0066D6;
+}
+
+.btn-cancel-homework {
+    flex: 1;
+    padding: 10px;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel-homework:active {
+    transform: scale(0.95);
+    background: var(--bg);
+}
+
+.lesson-homework-empty {
+    margin-top: 12px;
+}
+
+.btn-add-homework {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--text-secondary);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-homework:active {
+    background: var(--bg);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary,
+.btn-secondary {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+    transform: scale(0.97);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--primary);
+    width: 100%;
+    margin-top: 16px;
+    font-size: 17px;
+    cursor: pointer;
+    padding: 12px;
+}
+
+.btn-text:active {
+    opacity: 0.7;
+}
+
+/* ===== UPLOAD VIEW ===== */
+.upload-area {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 2px dashed var(--border);
+    margin-bottom: 20px;
+}
+
+.upload-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+#file-input {
+    display: none;
+}
+
+.upload-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.upload-label:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 4px rgba(0, 122, 255, 0.2);
+}
+
+/* OCR Progress */
+.ocr-progress {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== EDITOR VIEW ===== */
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.day-selector {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.day-btn {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.day-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 122, 255, 0.3);
+}
+
+.day-btn:active {
+    transform: scale(0.95);
+}
+
+.add-lesson-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.add-lesson-btn .icon {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.add-lesson-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 4px rgba(52, 199, 89, 0.2);
+}
+
+/* Editor Items */
+.editor-item {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.editor-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.lesson-number {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-delete {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--error);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-delete:active {
+    transform: scale(0.9);
+    background: #D63030;
+}
+
+.editor-item-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.time-picker-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.time-picker-group label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.time-input {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.editor-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.editor-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.editor-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 380px) {
+    .day-btn {
+        font-size: 12px;
+        padding: 8px 2px;
+    }
+    
+    .add-lesson-btn span:not(.icon) {
+        display: none;
+    }
+    
+    .lesson-time {
+        font-size: 13px;
+        min-width: 70px;
+    }
+    
+    .lesson-name {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .card-lesson-hw {
+        max-width: 100%;
+        margin-top: 4px;
+    }
+}
